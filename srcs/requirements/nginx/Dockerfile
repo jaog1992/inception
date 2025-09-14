@@ -6,8 +6,10 @@ ARG DOMAIN_NAME
 ENV DOMAIN_NAME=${DOMAIN_NAME}
 
 #Updates the package list and installs Nginx and OpenSSL.
-RUN apt-get update && apt-get install -y nginx openssl
-
+RUN apt-get update && \
+    apt-get install -y nginx openssl && \
+    rm -rf /var/lib/apt/lists/*
+	
 #Create SSL Directory and Generate SSL Certificate
 RUN mkdir /etc/nginx/ssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -16,9 +18,9 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/CN=${DOMAIN_NAME}"
 
 #Copy Nginx Configuration and HTML File
-COPY ./conf/nginx.conf /etc/nginx/conf.d
+COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./tools/index.html /usr/share/nginx/html/
-COPY ./tools/init.sh /tmp/
+COPY ./tools/init.sh /tmp/init.sh
 
 RUN chmod +x /tmp/init.sh
 
