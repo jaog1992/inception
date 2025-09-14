@@ -1,5 +1,5 @@
 #base image
-FROM debian:bullseye
+FROM debian:bookworm
 
 # Add build argument for domain name
 ARG DOMAIN_NAME

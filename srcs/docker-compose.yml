@@ -7,7 +7,7 @@ services:
     expose:
       - 3306
     volumes:
-     - DB_Volume:/var/lib/mysql
+     - mariadb_data:/var/lib/mysql
     user: mysql:mysql
     networks:
       - DockerNet
@@ -23,7 +23,7 @@ services:
     expose:
       - 9000
     volumes:
-      - WP_Volume:/var/www/html
+      - wordpress_html_data:/var/www/html
     networks:
       - DockerNet
     env_file:
@@ -41,19 +41,19 @@ services:
     ports:
       - "443:443"
     volumes:
-      - WP_Volume:/var/www/html
+      - wordpress_html_data:/var/www/html
     networks:
       - DockerNet
     env_file:
       - .env
 volumes:
-  WP_Volume:
+  wordpress_html_data:
     driver: local
     driver_opts:
       type: volume
       device: /home/jde-orma/data/wordpress
       o: bind
-  DB_Volume:
+  mariadb_data:
     driver: local
     driver_opts:
       type: volume

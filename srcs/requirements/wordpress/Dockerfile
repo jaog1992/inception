@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 COPY ./conf/setup.sh /tmp
 
